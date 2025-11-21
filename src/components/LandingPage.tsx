@@ -125,17 +125,7 @@ const LandingPage: React.FC = () => {
             <span className="logo-text">NotifyHub</span>
           </div>
 
-          <div className="nav-right">
-            {/* TOP LOGIN BUTTON */}
-            <span className="nav-login" onClick={() => navigate("/login")}>
-              Login
-            </span>
 
-            {/* TOP GET STARTED BUTTON */}
-            <button className="nav-btn" onClick={() => navigate("/signup")}>
-              Get Started
-            </button>
-          </div>
         </nav>
 
         {/* Hero Section */}
