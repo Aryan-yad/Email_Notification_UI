@@ -166,7 +166,7 @@ const CenterText = styled.p`
 
 const Signup: React.FC = () => {
   const [name, setName] = useState<string>("");
-  const [gmail, setGmail] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
 
@@ -178,7 +178,7 @@ const Signup: React.FC = () => {
   const handleSubmit = async () => {
     setErrorMsg("");
 
-    if (!name || !gmail || !password) {
+    if (!name || !email || !password) {
       setErrorMsg("All fields are required.");
       return;
     }
@@ -186,9 +186,9 @@ const Signup: React.FC = () => {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:8080/user/SaveUser", {
+      await axios.post("http://localhost:8080/api/auth/signup", {
         name,
-        gmail,
+        email,
         password,
         role: "USER",
       });
@@ -241,9 +241,9 @@ const Signup: React.FC = () => {
           <Input
             type="email"
             placeholder="you@example.com"
-            value={gmail}
+            value={email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setGmail(e.target.value)
+              setEmail(e.target.value)
             }
           />
         </InputWrapper>

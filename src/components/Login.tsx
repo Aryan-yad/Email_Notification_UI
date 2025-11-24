@@ -89,7 +89,7 @@ const SignUpLink = styled.span`
 `;
 
 const Login: React.FC = () => {
-  const [gmail, setGmail] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState<"USER" | "ADMIN">("USER");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -100,8 +100,8 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8080/user/login", {
-        gmail,
+      const response = await axios.post("http://localhost:8080/api/auth/signin", {
+        email,
         password,
         role,
       });
@@ -168,8 +168,8 @@ const Login: React.FC = () => {
             <TextField
               type="email"
               placeholder="you@example.com"
-              value={gmail}
-              onChange={(e) => setGmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               size="small"
               fullWidth
               InputProps={{
@@ -250,3 +250,6 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+
+

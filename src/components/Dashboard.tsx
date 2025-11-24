@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bell, Plus, Download, LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 import { AddEventDialog } from "./AddEventDialog";
@@ -18,6 +20,8 @@ export interface Event {
 }
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const [events, setEvents] = useState<Event[]>([
     {
       id: "1",
@@ -42,7 +46,12 @@ export default function Dashboard() {
   ]);
 
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
-  const [userName] = useState("John Doe");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName");
+    if (storedName) setUserName(storedName);
+  }, []);
 
   const handleAddEvent = (
     eventData: Omit<Event, "id" | "status" | "createdAt">
@@ -64,9 +73,7 @@ export default function Dashboard() {
     setTimeout(() => {
       setEvents((prev) =>
         prev.map((event) =>
-          event.id === newEvent.id
-            ? { ...event, status: "success" }
-            : event
+          event.id === newEvent.id ? { ...event, status: "success" } : event
         )
       );
 
@@ -103,7 +110,9 @@ export default function Dashboard() {
   };
 
   const handleLogout = () => {
+    localStorage.clear(); // remove user session
     toast.info("Logged out successfully");
+    navigate("/", { replace: true }); // go to Landing Page
   };
 
   const pendingCount = events.filter((e) => e.status === "pending").length;
